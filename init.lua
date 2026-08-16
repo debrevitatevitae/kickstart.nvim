@@ -363,6 +363,9 @@ do
   -- Vim Fugitive from tpope
   vim.pack.add { gh 'tpope/vim-fugitive' }
 
+  -- lazygit plugin
+  vim.pack.add { gh 'kdheepak/lazygit.nvim' }
+
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
   require('which-key').setup {
