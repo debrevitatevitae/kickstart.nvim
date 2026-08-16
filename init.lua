@@ -365,6 +365,7 @@ do
 
   -- lazygit plugin
   vim.pack.add { gh 'kdheepak/lazygit.nvim' }
+  vim.keymap.set('n', '<leader>lg', '<cmd>LazyGit<CR>')
 
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
