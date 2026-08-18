@@ -389,10 +389,23 @@ do
     },
   }
 
+  -- Add catppuccin theme
+  vim.pack.add { { src = gh 'catppuccin/nvim', name = 'catppuccin' } }
+  local latte = require('catppuccin.palettes').get_palette 'latte'
+  local frappe = require('catppuccin.palettes').get_palette 'frappe'
+  local macchiato = require('catppuccin.palettes').get_palette 'macchiato'
+  local mocha = require('catppuccin.palettes').get_palette 'mocha'
+  -- catppuccin integrations
+  require('catppuccin').setup {
+    flavour = 'auto',
+    background = { light = 'latte', dark = 'frappe' },
+    auto_integrations = true,
+  }
+
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'catppuccin'
+  vim.cmd.colorscheme 'catppuccin-nvim'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -693,7 +706,14 @@ do
   local servers = {
     -- clangd = {},
     -- gopls = {},
-    pyright = {},
+    -- pyright = {},
+    basedpyright = {
+      cmd_env = {
+        LC_ALL = 'en_US.UTF-8', -- Diagnostics in English
+        LANG = 'en_US.UTF-8',
+      },
+    }, -- Type-checking for Python
+    ruff = {}, -- Linting and formatting for Python
     -- rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -784,8 +804,8 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
-        -- python = true,
+        lua = true,
+        python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -801,6 +821,7 @@ do
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
+      python = { 'ruff_fix', 'ruff_organize_imports', 'ruff_format' },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
