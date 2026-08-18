@@ -359,6 +359,8 @@ do
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
   }
+  -- Keymap for the separate window preview
+  vim.keymap.set('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { desc = 'Git [P]review hunk' })
 
 
   -- Useful plugin to show you pending keybinds.
