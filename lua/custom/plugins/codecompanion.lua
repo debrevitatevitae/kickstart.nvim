@@ -52,4 +52,5 @@ do
       },
     },
   }
+  vim.keymap.set('n', '<leader>cc', '<cmd>CodeCompanionChat<CR>', { desc = 'Open Code Companion Chat' })
 end
