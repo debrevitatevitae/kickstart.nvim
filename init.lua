@@ -171,6 +171,22 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  -- Show the filename (relative path) at the top of each window,
+  -- but skip special buffers like neo-tree, terminals, quickfix, etc.
+  vim.api.nvim_create_autocmd({ 'BufWinEnter', 'BufWritePost' }, {
+    desc = 'Set winbar to show filename, skipping special buffers',
+    group = vim.api.nvim_create_augroup('kickstart-winbar', { clear = true }),
+    callback = function(args)
+      local excluded_filetypes = { 'neo-tree', 'qf', 'help', 'mason', 'lazy', 'TelescopePrompt' }
+      local excluded_buftypes = { 'terminal', 'nofile', 'prompt', 'quickfix' }
+
+      if vim.tbl_contains(excluded_filetypes, vim.bo[args.buf].filetype) then return end
+      if vim.tbl_contains(excluded_buftypes, vim.bo[args.buf].buftype) then return end
+
+      vim.wo.winbar = '%=%m %f'
+    end,
+  })
 end
 
 -- ============================================================
